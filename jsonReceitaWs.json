@@ -1,0 +1,58 @@
+{
+  "atividade_principal": [
+    {
+      "text": "Restaurantes e similares",
+      "code": "56.11-2-01"
+    }
+  ],
+  "data_situacao": "03/11/2005",
+  "complemento": "TERREO",
+  "nome": "CASA AMARELA COMIDA CASEIRA LTDA",
+  "uf": "DF",
+  "telefone": "(61) 3386-0093",
+  "atividades_secundarias": [
+    {
+      "text": "Comércio varejista de mercadorias em geral, com predominância de produtos alimentícios - minimercados, mercearias e armazéns",
+      "code": "47.12-1-00"
+    }
+  ],
+  "qsa": [
+    {
+      "qual": "22-Sócio",
+      "nome": "DAVID ARCHIE BATISTA"
+    },
+    {
+      "qual": "22-Sócio",
+      "nome": "DANIELLE FERNANDES BATISTA VALENTE"
+    },
+    {
+      "qual": "49-Sócio-Administrador",
+      "nome": "DAVID ARCHIE BATISTA JUNIOR"
+    }
+  ],
+  "situacao": "ATIVA",
+  "bairro": "NUCLEO BANDEIRANTE",
+  "logradouro": "ST SIBS QUADRA 03 CONJUNTO A LOTE",
+  "numero": "01",
+  "cep": "71.736-301",
+  "municipio": "BRASILIA",
+  "porte": "MICRO EMPRESA",
+  "abertura": "13/08/1993",
+  "natureza_juridica": "206-2 - Sociedade Empresária Limitada",
+  "fantasia": "CASA AMARELA",
+  "cnpj": "38.020.632/0001-90",
+  "ultima_atualizacao": "2020-01-27T22:05:51.611Z",
+  "status": "OK",
+  "tipo": "MATRIZ",
+  "email": "",
+  "efr": "",
+  "motivo_situacao": "",
+  "situacao_especial": "",
+  "data_situacao_especial": "",
+  "capital_social": "50000.00",
+  "extra": {},
+  "billing": {
+    "free": true,
+    "database": true
+  }
+}
