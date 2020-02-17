@@ -1,17 +1,12 @@
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
 
 namespace utools.Models
 {
     public class Empresa
     {
-        // [Key]
-        [Required]
-        [Display(Name = "C.N.P.J.")]
-        [MinLength(14, ErrorMessage = "O CNPJ está errado")]   
-        // [Required(ErrorMessage = "O CNPJ é obrigatório")]
+        [Key]
+        [MinLength(14, ErrorMessage = "CNPJ muito pequeno")]
         // [MaxLength(15, ErrorMessage = "CNPJ muito grande")]        
         public string cnpj { get; set; }
         public string tipo { get; set; }
@@ -23,25 +18,24 @@ namespace utools.Models
         public List<Cnae> atividades_secundarias { get; set; }
         public string natureza_juridica { get; set; }
         public string logradouro { get; set; }
-        public string numero { get; set; }
+        public int numero { get; set; }
         public string complemento { get; set; }
         public string cep { get; set; }
         public string bairro { get; set; }
         public string municipio { get; set; }
         public string uf { get; set; }
-        // [EmailAddress]
         public string email { get; set; }
         public string telefone { get; set; }
         public string efr { get; set; }
         public string situacao { get; set; }
         public string data_situacao { get; set; }
-     
-        [JsonIgnore]
-        public DateTime DataCriacao { get; set; }
-        
-        public Empresa()
-        {
-            DataCriacao = DateTime.Now;
-        }
+        public Cnae Cnae { get; set; }
+        // [JsonIgnore]
+        // public DateTime DataCriacao { get; set; }
+
+        // public Empresa()
+        // {
+        //     DataCriacao = DateTime.Now;
+        // }
     }
 }

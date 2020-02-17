@@ -1,8 +1,11 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace utools.Models
 {
     public class Cnae
     {
-        public string text { get; set; }
+        public int Id { get; set; }
         public string code { get; set; }
+        public string text { get; set; }
     }
 }
