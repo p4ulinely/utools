@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -5,9 +6,7 @@ namespace utools.Models
 {
     public class Empresa
     {
-        [Key]
-        [MinLength(14, ErrorMessage = "CNPJ muito pequeno")]
-        // [MaxLength(15, ErrorMessage = "CNPJ muito grande")]        
+        [Key]    
         public string cnpj { get; set; }
         public string tipo { get; set; }
         public string abertura { get; set; }
@@ -29,7 +28,7 @@ namespace utools.Models
         public string efr { get; set; }
         public string situacao { get; set; }
         public string data_situacao { get; set; }
-        public Cnae Cnae { get; set; }
+
         // [JsonIgnore]
         // public DateTime DataCriacao { get; set; }
 
