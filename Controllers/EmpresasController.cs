@@ -16,7 +16,7 @@ namespace utools.Controllers
     [Route("v1/[controller]")]
     public class EmpresasController : ControllerBase
     {
-        private DataContext dbEmpresas = new DataContext();
+        // private DataContext dbEmpresas = new DataContext();
 
         // metodo para parsear json para objeto Empresa
         private Empresa JsonToEmpresa(string json)
@@ -32,10 +32,6 @@ namespace utools.Controllers
         // metodo para parsear objeto Empresa para json
         private string EmpresaToJson(Empresa obj)
         {
-            // var obj = new Empresa(){
-            //     cnpj = {}
-            // };
-
             var ms = new MemoryStream();
             var ser = new DataContractJsonSerializer(typeof(Empresa));
             ser.WriteObject(ms, obj);
@@ -59,34 +55,29 @@ namespace utools.Controllers
 
         [HttpGet]
         [Route("")]
-        public dynamic DisplayEmpresas()
+        public dynamic DisplayEmpresas([FromServices] DataContext context)
         {
             try
             {
-                var data = dbEmpresas.Empresas
+                var data = context.Empresas
                 .Include(e => e.atividade_principal)
                 .Include(e => e.atividades_secundarias)
                 .ToList();
 
-                if (data.Count() > 0)
-                {
-                    return data;
-                }
-                else
-                {
-                    return StatusCode(400, new {message = "Não há CNPJs cadastrados"});
-                }
+                if (!(data.Count() > 0)) return Ok(new {message = "Não há CNPJs cadastrados"});
+                
+                return data;
             }
             catch (Exception ex)
             {
                 System.Console.WriteLine(ex);
-                return StatusCode(500, new {message = "Erro ao fazer consulta"});
+                return BadRequest(new {message = "Erro ao fazer consulta"});
             }
         }// public dynamic DisplayEmpresas
 
         [HttpPost]
         [Route("{cnpj}")]
-        public async Task<IActionResult> CollectEmpresa(string cnpj)
+        public async Task<IActionResult> CollectEmpresa([FromServices] DataContext context, string cnpj)
         {
             try
             {
@@ -100,37 +91,34 @@ namespace utools.Controllers
                 if (apiResponse.IsSuccessStatusCode)
                 {
                     string data = await apiResponse.Content.ReadAsStringAsync();
-
-                    if (data.Contains("CNPJ inválido")) return StatusCode(400, new {message = "CNPJ inválido"});
-
                     Empresa empresa = JsonToEmpresa(data);
-                    dbEmpresas.Empresas.Add(empresa);
-                    dbEmpresas.SaveChanges();
+                    context.Empresas.Add(empresa);
+                    context.SaveChanges();
 
                     return Ok(new {message = "CNPJ inserido"});
                 }
                 else
                 {
-                    return StatusCode(500, new {message = "API da Receita Offline"});
+                    return BadRequest(new {message = "API da Receita Offline"});
                 }
                 
             }
             catch (DbUpdateException ex)
             {
                 System.Console.WriteLine(ex);
-                return StatusCode(400, new {message = "CNPJ já existe"});
+                return BadRequest(new {message = "CNPJ já existe"});
             }
             catch (Exception ex)
             {
                 System.Console.WriteLine(ex);
-                return StatusCode(500, new {message = "BD não aceitou o CNPJ"});
+                return BadRequest(new {message = "BD não aceitou o CNPJ"});
             }
         }// public async Task<IActionResult> CollectEmpresa
 
         [HttpGet]
         [Route("{id}/{tipo:alpha}")]
         // [Route("{id:regex(^\\d{{2}}\\d{{3}}\\d{{3}}\\d{{4}}\\d{{2}}$)}")]
-        public dynamic GetEmpresa(string id, string tipo)
+        public dynamic GetEmpresa([FromServices] DataContext context, string id, string tipo)
         {
             try
             {
@@ -139,63 +127,63 @@ namespace utools.Controllers
                 /* caso o tipo passado nao seja cnpj, buscara' pelo atributo 'nome'.
                     se for cnpj, buscara' pelo atributo 'cnpj'.
                 */
-                var data = dbEmpresas.Empresas
+                var data = context.Empresas
                     // busca pelos dois, mas apenas um retorna algo. assim, evita uma nova consulta.
                     .Where(e => e.cnpj == idToQuery || e.nome.Contains(idToQuery))
                     .Include(e => e.atividade_principal)
                     .Include(e => e.atividades_secundarias);
 
                 // caso a consulta retorne vazia
-                if (!(data.Count() > 0)) return StatusCode(400, new {message = "CNPJ ou NOME não encontrado"});
+                if (!(data.Count() > 0)) return NotFound(new {message = "CNPJ ou NOME não encontrado"});
 
                 return data;
             }
             catch (Exception ex)
             {
                 System.Console.WriteLine(ex);
-                return StatusCode(500, new {message = "Erro com CNPJ fornecido"});
+                return BadRequest(new {message = "Erro com CNPJ fornecido"});
             }
             
         }// public dynamic GetEmpresa
 
         [HttpDelete]
         [Route("{id}")]
-        public IActionResult RemoveEmpresaByCnpj(string id)
+        public IActionResult RemoveEmpresaByCnpj([FromServices] DataContext context, string id)
         {
             try
             {
-                var empresa = dbEmpresas.Empresas
+                var empresa = context.Empresas
                     .Include(e => e.atividade_principal)
                     .Include(e => e.atividades_secundarias)
                     .First(e => e.cnpj == MaskCnpj(id));
                 
-                var cnaePrincipal = dbEmpresas.Cnaes
+                var cnaePrincipal = context.Cnaes
                     .First(c => c.Id == empresa.atividade_principal[0].Id);
                 
                 var atividadesSecundarias = empresa.atividades_secundarias;
                 
-                dbEmpresas.Remove(empresa); // remove empresa
-                dbEmpresas.Remove(cnaePrincipal); // remove CNAE principal
+                context.Remove(empresa); // remove empresa
+                context.Remove(cnaePrincipal); // remove CNAE principal
     
                 foreach (Cnae cnae in atividadesSecundarias) // remove CNAEs secundarios
                 {
-                    dbEmpresas.Remove(dbEmpresas.Cnaes
+                    context.Remove(context.Cnaes
                     .First(c => c.Id == cnae.Id));
                 }
 
-                dbEmpresas.SaveChanges();
+                context.SaveChanges();
 
                 return Ok(new {message = "CNPJ removido"}); 
             }
             catch (InvalidOperationException ex)
             {
                 System.Console.WriteLine(ex);
-                return StatusCode(400, new {message = "CNPJ não encontrado"});
+                return NotFound(new {message = "CNPJ não encontrado"});
             }
             catch (Exception ex)
             {
                 System.Console.WriteLine(ex);
-                return StatusCode(500, new {message = "Erro no BD"});
+                return BadRequest(new {message = "Erro no BD"});
             }
         }// public IActionResult RemoveEmpresaByCnpj
     }
