@@ -6,7 +6,7 @@ namespace utools.Models
 {
     public class Empresa
     {
-        [Key]    
+        [Key]
         public string cnpj { get; set; }
         public string tipo { get; set; }
         public string abertura { get; set; }
