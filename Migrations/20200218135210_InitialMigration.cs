@@ -29,8 +29,7 @@ namespace utools.Migrations
                     telefone = table.Column<string>(nullable: true),
                     efr = table.Column<string>(nullable: true),
                     situacao = table.Column<string>(nullable: true),
-                    data_situacao = table.Column<string>(nullable: true),
-                    CnaeId = table.Column<int>(nullable: true)
+                    data_situacao = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -74,36 +73,15 @@ namespace utools.Migrations
                 name: "IX_Cnaes_Empresacnpj1",
                 table: "Cnaes",
                 column: "Empresacnpj1");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Empresas_CnaeId",
-                table: "Empresas",
-                column: "CnaeId");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Empresas_Cnaes_CnaeId",
-                table: "Empresas",
-                column: "CnaeId",
-                principalTable: "Cnaes",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Cnaes_Empresas_Empresacnpj",
-                table: "Cnaes");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_Cnaes_Empresas_Empresacnpj1",
-                table: "Cnaes");
+            migrationBuilder.DropTable(
+                name: "Cnaes");
 
             migrationBuilder.DropTable(
                 name: "Empresas");
-
-            migrationBuilder.DropTable(
-                name: "Cnaes");
         }
     }
 }
