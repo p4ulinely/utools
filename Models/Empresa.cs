@@ -28,13 +28,6 @@ namespace utools.Models
         public string efr { get; set; }
         public string situacao { get; set; }
         public string data_situacao { get; set; }
-
-        // [JsonIgnore]
-        // public DateTime DataCriacao { get; set; }
-
-        // public Empresa()
-        // {
-        //     DataCriacao = DateTime.Now;
-        // }
+        
     }
 }
