@@ -8,6 +8,13 @@ namespace utools.Data
         public DbSet<Empresa> Empresas { get; set; }
         public DbSet<Cnae> Cnaes { get; set; }
 
+        public DataContext()
+        { }
+
+        public DataContext(DbContextOptions<DataContext> options)
+            : base(options)
+        { }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -15,6 +22,8 @@ namespace utools.Data
                 optionsBuilder.UseMySql("Server=" + Settings.Host + ";User Id="
                     + Settings.DbUser + ";Password=" + Settings.DbPwd
                     + ";Database=" + Settings.DbName);
+
+                //  optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EFProviders.InMemory;Trusted_Connection=True;ConnectRetryCount=0");
             }
         }
 
