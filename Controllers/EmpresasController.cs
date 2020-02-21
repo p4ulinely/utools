@@ -1,13 +1,11 @@
 using System;
 using utools.Models;
 using utools.Data;
+using utools.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using System.Net.Http;
-using System.Text;
-using System.IO;
-using System.Runtime.Serialization.Json;
 using System.Linq;
 
 namespace utools.Controllers
@@ -16,42 +14,8 @@ namespace utools.Controllers
     [Route("v1/[controller]")]
     public class EmpresasController : ControllerBase
     {
-        // private DataContext dbEmpresas = new DataContext();
 
-        // metodo para parsear json para objeto Empresa
-        private Empresa JsonToEmpresa(string json)
-        {
-            var deserializedEmpresa = new Empresa();
-            var ms = new MemoryStream(Encoding.UTF8.GetBytes(json));
-            var ser = new DataContractJsonSerializer(deserializedEmpresa.GetType());
-            deserializedEmpresa = ser.ReadObject(ms) as Empresa;
-            ms.Close();
-            return deserializedEmpresa;
-        }// private Empresa JsonToEmpresa
 
-        // metodo para parsear objeto Empresa para json
-        private string EmpresaToJson(Empresa obj)
-        {
-            var ms = new MemoryStream();
-            var ser = new DataContractJsonSerializer(typeof(Empresa));
-            ser.WriteObject(ms, obj);
-            byte[] json = ms.ToArray();
-            ms.Close();
-            return Encoding.UTF8.GetString(json, 0, json.Length);
-        }// private string EmpresaToJson
-
-        // metodo para aplicar mascara no cnpj
-        private string MaskCnpj(string cnpj)
-        {
-            if(cnpj.Length != 14) throw new Exception();
-
-            return cnpj.Substring(0,2) + "." +
-                cnpj.Substring(2,3) + "." +
-                cnpj.Substring(5,3) + "/" +
-                cnpj.Substring(8,4) + "-" +
-                cnpj.Substring(12,2);
-            
-        }// private string MaskCnpj
 
         [HttpGet]
         [Route("")]
@@ -77,7 +41,7 @@ namespace utools.Controllers
 
         [HttpPost]
         [Route("{cnpj}")]
-        public async Task<IActionResult> CollectEmpresa([FromServices] DataContext context, string cnpj)
+        public IActionResult CollectEmpresa([FromServices] DataContext context, string cnpj)
         {
             try
             {
@@ -86,12 +50,12 @@ namespace utools.Controllers
                 // url da api que fornece os dados do CNPJ
                 client.BaseAddress = new Uri("https://www.receitaws.com.br/v1/cnpj/");
                 
-                HttpResponseMessage apiResponse = await client.GetAsync(cnpj);
+                HttpResponseMessage apiResponse = client.GetAsync(cnpj).Result;
 
                 if (apiResponse.IsSuccessStatusCode)
                 {
-                    string data = await apiResponse.Content.ReadAsStringAsync();
-                    Empresa empresa = JsonToEmpresa(data);
+                    string data = apiResponse.Content.ReadAsStringAsync().Result;
+                    Empresa empresa = Conversion.JsonToEmpresa(data);
                     context.Empresas.Add(empresa);
                     context.SaveChanges();
 
@@ -122,7 +86,7 @@ namespace utools.Controllers
         {
             try
             {
-                string idToQuery = tipo == "cnpj" ? MaskCnpj(id) : id;
+                string idToQuery = tipo == "cnpj" ? Conversion.MaskCnpj(id) : id;
 
                 /* caso o tipo passado nao seja cnpj, buscara' pelo atributo 'nome'.
                     se for cnpj, buscara' pelo atributo 'cnpj'.
@@ -155,7 +119,7 @@ namespace utools.Controllers
                 var empresa = context.Empresas
                     .Include(e => e.atividade_principal)
                     .Include(e => e.atividades_secundarias)
-                    .First(e => e.cnpj == MaskCnpj(id));
+                    .First(e => e.cnpj == Conversion.MaskCnpj(id));
                 
                 var cnaePrincipal = context.Cnaes
                     .First(c => c.Id == empresa.atividade_principal[0].Id);
