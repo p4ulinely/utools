@@ -19,15 +19,13 @@ namespace utools.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseMySql("Server=" + Settings.Host + ";User Id="
+                optionsBuilder.UseMySql("Server=" + Settings.Server + ";User Id="
                     + Settings.DbUser + ";Password=" + Settings.DbPwd
-                    + ";Database=" + Settings.DbName);
-
-                //  optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EFProviders.InMemory;Trusted_Connection=True;ConnectRetryCount=0");
+                    + ";Database=" + Settings.DbName);  
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {}
+        { }
     }
 }
