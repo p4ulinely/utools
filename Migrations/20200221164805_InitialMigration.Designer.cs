@@ -8,7 +8,7 @@ using utools.Data;
 namespace utools.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20200218135210_InitialMigration")]
+    [Migration("20200221164805_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,16 +25,16 @@ namespace utools.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Empresacnpj")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+                        .HasColumnType("varchar(255) ");
 
                     b.Property<string>("Empresacnpj1")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+                        .HasColumnType("varchar(255) ");
 
                     b.Property<string>("code")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("longtext ");
 
                     b.Property<string>("text")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("longtext ");
 
                     b.HasKey("Id");
 
@@ -48,61 +48,61 @@ namespace utools.Migrations
             modelBuilder.Entity("utools.Models.Empresa", b =>
                 {
                     b.Property<string>("cnpj")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+                        .HasColumnType("varchar(255) ");
 
                     b.Property<string>("abertura")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("longtext ");
 
                     b.Property<string>("bairro")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("longtext ");
 
                     b.Property<string>("cep")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("longtext ");
 
                     b.Property<string>("complemento")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("longtext ");
 
                     b.Property<string>("data_situacao")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("longtext ");
 
                     b.Property<string>("efr")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("longtext ");
 
                     b.Property<string>("email")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("longtext ");
 
                     b.Property<string>("fantasia")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("longtext ");
 
                     b.Property<string>("logradouro")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("longtext ");
 
                     b.Property<string>("municipio")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("longtext ");
 
                     b.Property<string>("natureza_juridica")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("longtext ");
 
                     b.Property<string>("nome")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("longtext ");
 
                     b.Property<int>("numero")
                         .HasColumnType("int");
 
                     b.Property<string>("porte")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("longtext ");
 
                     b.Property<string>("situacao")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("longtext ");
 
                     b.Property<string>("telefone")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("longtext ");
 
                     b.Property<string>("tipo")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("longtext ");
 
                     b.Property<string>("uf")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("longtext ");
 
                     b.HasKey("cnpj");
 
