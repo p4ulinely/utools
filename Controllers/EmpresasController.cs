@@ -3,7 +3,6 @@ using utools.Models;
 using utools.Data;
 using utools.Services;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using System.Net.Http;
 using System.Linq;
@@ -14,8 +13,6 @@ namespace utools.Controllers
     [Route("v1/[controller]")]
     public class EmpresasController : ControllerBase
     {
-
-
 
         [HttpGet]
         [Route("")]
@@ -35,7 +32,7 @@ namespace utools.Controllers
             catch (Exception ex)
             {
                 System.Console.WriteLine(ex);
-                return BadRequest(new {message = "Erro ao fazer consulta"});
+                return BadRequest(new {message = "Erro na consulta"});
             }
         }// public dynamic DisplayEmpresas
 
@@ -81,7 +78,6 @@ namespace utools.Controllers
 
         [HttpGet]
         [Route("{id}/{tipo:alpha}")]
-        // [Route("{id:regex(^\\d{{2}}\\d{{3}}\\d{{3}}\\d{{4}}\\d{{2}}$)}")]
         public dynamic GetEmpresa([FromServices] DataContext context, string id, string tipo)
         {
             try
