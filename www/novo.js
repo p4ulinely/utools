@@ -1,43 +1,68 @@
+
+// let card = document.getElementById('card-body');
+let card = document.querySelector('#meuCard .card .card-body');
+let backupFormularioVisualizacao = card.innerHTML;
+let carregando = "<div class='text-center'><div class='spinner-border' style='width: 3rem; height: 3rem;' role='status'><span class='sr-only'>Loading...</span></div></div>";
+
 window.onload = function() {
-    // coletarEmpresas();
+
 }
 
-// let card = document.querySelector('#app .container .card .card-body');
-let carregando = "<div class='text-center'><div class='spinner-border' style='width: 3rem; height: 3rem;' role='status'><span class='sr-only'>Loading...</span></div></div>";
-let card = document.getElementById('card-body');
-
-function buscarEmpresa(tipo='/nome'){
+//consome o endpoint de busca, mas nesse front-end, tambem eh usado pra visualizar os dados das empresas
+function buscarEmpresa(source, tipo='/cnpj'){
 
     // e.preventDefault();
-    let cnpjNome = document.getElementById('inpt-buscarEmpresa');
+    let cnpjNome = document.getElementById((source || 'inpt-buscarEmpresa'));
     let endereco = 'https://utools-api.herokuapp.com/v1/empresas/';
+    let isPorNome = document.getElementById('isPesquisaNome').checked;
 
+    // para gantarir a visualizacao da empresa, quando nao for busca
+    if(isPorNome && source == undefined) tipo = "/nome";
+
+    //se aplica apenas para o form de busca
     if(cnpjNome.value.length < 2){
         let helper = document.getElementById('inpt-buscarEmpresas-Help');
         helper.className = "form-text text-danger";
         helper.innerHTML = "Dados inválidos.";
         return cnpjNome.focus();
-    } 
+    }
 
     card.innerHTML = carregando;
-
+    
     api(endereco+cnpjNome.value+tipo)
         .then(function(response) {
-
+        
             if(response.message){
                 card.innerHTML = "Não encontrado";
                 return null;
             }
-
-            card.innerHTML = "";
+        
+            // restaura html do fomulario
+            card.innerHTML = backupFormularioVisualizacao;
+        
+            document.getElementById('cnpj').value = response[0].cnpj;
+            document.getElementById('nome').value = response[0].nome;
+            document.getElementById('abertura').value = response[0].abertura;
+            document.getElementById('fantasia').value = response[0].fantasia;
+            document.getElementById('porte').value = response[0].porte;
+            document.getElementById('atividade_principal_code').value = response[0].atividade_principal[0].code;
+            document.getElementById('atividade_principal_text').value = response[0].atividade_principal[0].text;
+            document.getElementById('natureza_juridica').value = response[0].natureza_juridica;
+            document.getElementById('logradouro').value = response[0].logradouro;
+            document.getElementById('numero').value = response[0].numero;
+            document.getElementById('complemento').value = response[0].complemento;
+            document.getElementById('bairro').value = response[0].bairro;
+            document.getElementById('cep').value = response[0].cep;
+            document.getElementById('municipio').value = response[0].municipio;
+            document.getElementById('uf').value = response[0].uf;
+            document.getElementById('telefone').value = response[0].telefone;
+            document.getElementById('email').value = response[0].email;
+            document.getElementById('situacao').value = response[0].situacao;
+            document.getElementById('data_situacao').value = response[0].data_situacao;
             
-			for(res of response){
-				let meuP = document.createElement('p');
-				let minhaEmpresa = document.createTextNode(res.cnpj + " " + res.nome);
-
-				meuP.appendChild(minhaEmpresa);
-				card.appendChild(meuP);
-			}
+            // seta a div para ser mostrada
+            document.getElementById('formVisualizacao').style = "display: block;";
+        
         })
         .catch(function (err) {
 			console.warn(err);
@@ -61,7 +86,7 @@ function mostrarEmpresas() {
             let str = "<table class='table table-striped'><thead><tr><th scope='col'>CNPJ</th><th scope='col'>NOME</th><th scope='col'>CIDADE</th><th scope='col'>UF</th><th scope='col'>ACOES</th></tr></thead><tbody>";
 
 			for(let r of response){
-                str += "<tr><td>"+r.cnpj+"</td><td>"+r.nome+"</td><td>"+r.municipio+"</td><td>"+r.uf+"</td><td><a href='#' onClick='deletarCNPJ("+rPontuacao(r.cnpj)+")'>REMOVER</a></td></tr>";
+                str += "<tr><td>"+r.cnpj+"<input type='hidden' id='cnpj_"+rPontuacao(r.cnpj)+"' value='"+rPontuacao(r.cnpj)+"'></td><td><a href='#' onClick='buscarEmpresa(\"cnpj_"+rPontuacao(r.cnpj)+"\")'>"+r.nome+"</a></td><td>"+r.municipio+"</td><td>"+r.uf+"</td><td><a href='#' class='btn btn-danger btn-sm' onClick='deletarCNPJ(\""+rPontuacao(r.cnpj)+"\")'>REMOVER</a></td></tr>";
             }
 
             str += "</tbody></table>";

@@ -59,9 +59,15 @@
                         <div class="card-body">
                             <p class="card-text">Já tem o CNPJ em mãos? Ótimo! Informe o abaixo e pesquise se a empresa já existe em nossa base de dados. Caso não tenha, pesquise pelo Nome Empresarial.</p>
                             <form class="form-inline" id="buscarEmpresa">
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="isPesquisaNome">
+                                    <label class="custom-control-label" for="isPesquisaNome">Pesquisar por Nome</label>
+                                </div>
                                 <input class="form-control mr-sm-2" id="inpt-buscarEmpresa" type="search" placeholder="Digite CNPJ ou Nome" aria-label="Search" required>
                                 <button onclick="buscarEmpresa()" class="btn btn-outline-warning my-2 my-sm-0" type="button">Procurar</button>
                                 <small id="inpt-buscarEmpresas-Help" class="form-text text-muted">Informe o CNPJ ou o Nome Empresarial.</small>
+
+                                
                             </form>
                         </div>
                     </div>
@@ -72,14 +78,121 @@
         
         <br/>
         
-        <div class="container">
+        <div class="container" id="meuCard">
             <div class="card">
 
-                <!-- aonde eh mapeado os JSONs -->
+                <!-- local onde os JSONs são mapeados -->
                 <div class="card-body" id="card-body" style="padding: 5 5;">
-                    
+                    <div id="formVisualizacao" style="display: none;">
+                        <form>
+                            <div class="form-row">
+                              <div class="form-group col-md-4">
+                                <label for="cnpj">CNPJ</label>
+                                <input type="text" class="form-control" id="cnpj" readonly>
+                              </div>
+                              <div class="form-group col-md-6">
+                                <label for="nome">NOME EMPRESARIAL</label>
+                                <input type="text" class="form-control" id="nome" readonly>
+                              </div>
+                              <div class="form-group col-md-2">
+                                <label for="abertura">DATA DE ABERTURA</label>
+                                <input type="text" class="form-control" id="abertura" readonly>
+                              </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-10">
+                                  <label for="fantasia">NOME FANTASIA</label>
+                                  <input type="text" class="form-control" id="fantasia" readonly>
+                                </div>
+  
+                                <div class="form-group col-md-2">
+                                  <label for="porte">PORTE</label>
+                                  <input type="text" class="form-control" id="porte" readonly>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-2">
+                                  <label for="atividade_principal_code">CNAE</label>
+                                  <input type="text" class="form-control" id="atividade_principal_code" readonly>
+                                </div>
+  
+                                <div class="form-group col-md-6">
+                                  <label for="atividade_principal_text">ATIVIDADE PRINCIPAL</label>
+                                  <input type="text" class="form-control" id="atividade_principal_text" readonly>
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label for="natureza_juridica">NATUREZA JURÍDICA</label>
+                                    <input type="text" class="form-control" id="natureza_juridica" readonly>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                  <label for="logradouro">LOGRADOURO</label>
+                                  <input type="text" class="form-control" id="logradouro" readonly>
+                                </div>
+  
+                                <div class="form-group col-md-2">
+                                  <label for="numero">NÚMERO</label>
+                                  <input type="text" class="form-control" id="numero" readonly>
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label for="complemento">COMPLEMENTO</label>
+                                    <input type="text" class="form-control" id="complemento" readonly>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-3">
+                                    <label for="bairro">BAIRRO</label>
+                                    <input type="text" class="form-control" id="bairro" readonly>
+                                </div>
+
+                                <div class="form-group col-md-3">
+                                  <label for="cep">CEP</label>
+                                  <input type="text" class="form-control" id="cep" readonly>
+                                </div>
+  
+                                <div class="form-group col-md-5">
+                                  <label for="municipio">MUNICÍPIO</label>
+                                  <input type="text" class="form-control" id="municipio" readonly>
+                                </div>
+
+                                <div class="form-group col-md-1">
+                                    <label for="uf">UF</label>
+                                    <input type="text" class="form-control" id="uf"readonly >
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-3">
+                                    <label for="telefone">TELEFONE</label>
+                                    <input type="text" class="form-control" id="telefone" readonly>
+                                </div>
+
+                                <div class="form-group col-md-5">
+                                  <label for="email">E-MAIL</label>
+                                  <input type="text" class="form-control" id="email" readonly>
+                                </div>
+  
+                                <div class="form-group col-md-2">
+                                  <label for="situacao">SITUAÇÃO</label>
+                                  <input type="text" class="form-control" id="situacao" readonly>
+                                </div>
+
+                                <div class="form-group col-md-2">
+                                    <label for="data_situacao">DATA SITUAÇÃO</label>
+                                    <input type="text" class="form-control" id="data_situacao"readonly >
+                                </div>
+                            </div>
+                          </form>
+                    </div>
                 </div>
-                <!-- aonde eh mapeado os JSONs -->
+                <!-- local onde os JSONs são mapeados -->
             
             </div>
         </div>
