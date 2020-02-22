@@ -1,3 +1,5 @@
+url = https://utools-api.herokuapp.com/
+
 ## Justificativas
  
 Uma vez que era obrigatório escrever a aplicação com Dotnet Core, com exceção do Banco de Dados - todas as outras tecnologias foram escolhidas por terem um ótimo custo benefício, bem como facilidade de integração com o Dotnet Core. O serviço de nuvem Heroku não tem compatibilidade com Dotnet Core, contudo havia a disponibilidade de usar Componentização com Docker, e através das imagens, fazer o deployment. Outro fator relevante, foi a minha fluência para com a plataforma.
