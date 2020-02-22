@@ -2,6 +2,8 @@
 
 `https://utools-api.herokuapp.com/`
 
+![Print Screen](https://i.ibb.co/PCq3hrn/Screen-Shot-2020-02-22-at-13-46-36.png)
+
 ### Justificativas
  
 Uma vez que era obrigatório escrever a aplicação com Dotnet Core, com exceção do Banco de Dados - todas as outras tecnologias foram escolhidas por terem um ótimo custo benefício, bem como facilidade de integração com o Dotnet Core. O serviço de nuvem Heroku não tem compatibilidade com Dotnet Core, contudo havia a disponibilidade de usar Conteinerização com Docker, e através das imagens, fazer o deployment. Outro fator relevante, foi a minha fluência para com a plataforma.
@@ -12,7 +14,7 @@ Com o objetivo de abstrair e facilitar a modelagem do Banco de Dados - BD, foi u
 
 Para os testes unitários foi utilizado o Bancos de Dados InMemory. Onde em, tempo de execução, cria-se uma instância do BD, apenas para atender a demanda dos testes. O framework NUnit foi utilizado por fazer parte do Dotnet Core e por ser bem difundido na comunidade (com bastante documentação). Para cada endpoint foi criado um teste assertivo.
 
-Por fim, foi feito uma aplicação front-end para consumir os dados da API (armazenada no Heroku). Preferi deixar para o final, uma vez que era algo mais simples de se fazer. Foi utilizado JavaScript e HTML puro na confenção da aplicação. Com execeção do Bootstrap, nenhum outro framework foi utilizado. Não houve qualquer necessidade de genrenciar dependências ou instalar pacotes, pois o Bootstrap é invocado por CDN, e os outros arquivos são estáticos, o que facilita muito na portabilidade da aplicação front-end.
+Por fim, foi feito uma aplicação front-end para consumir os dados da API (armazenada no Heroku). Preferi deixar para o final, uma vez que era algo mais simples de se fazer. Foi utilizado JavaScript e HTML puro na confenção da aplicação. Com execeção do Bootstrap, nenhum outro framework foi utilizado. Não houve qualquer necessidade de genreciar dependências ou instalar pacotes, pois o Bootstrap é invocado por CDN, e os outros arquivos são estáticos, o que facilita muito na portabilidade da aplicação front-end.
 
 ### Arquitetura
 
