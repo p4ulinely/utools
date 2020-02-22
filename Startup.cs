@@ -18,7 +18,7 @@ namespace utools
 
         public void ConfigureServices(IServiceCollection services)
         {
-            // services.AddCors();
+            services.AddCors();
             services.AddDbContext<DataContext>();
             services.AddScoped<DataContext, DataContext>(); // garante apenas um contexto, evitando lixo de memória
             services.AddControllers();
@@ -35,6 +35,9 @@ namespace utools
             app.UseHttpsRedirection();
 
             app.UseStaticFiles();
+            
+            // app.UseCors(option => option.AllowAnyOrigin());
+            app.UseCors(option => option.AllowAnyOrigin().WithMethods("GET", "POST", "DELETE"));
 
             app.UseRouting();
 
