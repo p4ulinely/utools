@@ -6,14 +6,22 @@ window.onload = function() {
 let carregando = "<div class='text-center'><div class='spinner-border' style='width: 3rem; height: 3rem;' role='status'><span class='sr-only'>Loading...</span></div></div>";
 let card = document.getElementById('card-body');
 
-function pegarEmpresa(tipo='/nome'){
+function buscarEmpresa(tipo='/nome'){
+
     // e.preventDefault();
-    let cnpjNome = document.getElementById('inpt-buscarEmpresa').value;
+    let cnpjNome = document.getElementById('inpt-buscarEmpresa');
     let endereco = 'https://utools-api.herokuapp.com/v1/empresas/';
+
+    if(cnpjNome.value.length < 2){
+        let helper = document.getElementById('inpt-buscarEmpresas-Help');
+        helper.className = "form-text text-danger";
+        helper.innerHTML = "Dados inválidos.";
+        return cnpjNome.focus();
+    } 
 
     card.innerHTML = carregando;
 
-    api(endereco+cnpjNome+tipo)
+    api(endereco+cnpjNome.value+tipo)
         .then(function(response) {
 
             if(response.message){
@@ -36,9 +44,7 @@ function pegarEmpresa(tipo='/nome'){
 		})
 }
 
-function coletarEmpresas() {
-	
-	console.log('requisitando...');
+function mostrarEmpresas() {
 
     let endereco = 'https://utools-api.herokuapp.com/v1/empresas';
 
@@ -85,8 +91,29 @@ function deletarCNPJ(cnpj){
         });
 }
 
-function cadastrarEmpresa(cnpj){
+function cadastrarEmpresa(){
+
+    let cnpj = document.getElementById('inpt-cadastrarEmpresas');
     
+    if(cnpj.value.length < 14) {
+        let helper = document.getElementById('inpt-cadastrarEmpresas-Help');
+        helper.className = "form-text text-danger";
+        helper.innerHTML = "CNPJ é composto de 14 dígitos.";
+        
+        return cnpj.focus();
+    }
+
+    card.innerHTML = carregando;
+
+    api("https://utools-api.herokuapp.com/v1/empresas/"+rPontuacao(cnpj.value), 'POST')
+        .then(function(response){
+            // card.innerHTML = response.message;
+            alert(response.message);
+            location.reload();
+        })
+        .catch(function (err) {
+			console.warn(err);
+        });
 }
 
 function api(url, verb='GET') {
@@ -103,12 +130,10 @@ function api(url, verb='GET') {
                         resolve(JSON.parse(xhr.responseText));
                         break;
                     case 404:
-                        // resolve(JSON.stringify({message: '404 - Nao encontrado'}));
                         resolve(JSON.parse(xhr.responseText));
                         break;
-                    case 500:
-                        // reject(JSON.stringify({message: '500 - Erro interno'}));
-                        reject(JSON.parse(xhr.responseText));
+                    case 400:
+                        resolve(JSON.parse(xhr.responseText));
                         break;
                     default:
                         reject(JSON.stringify({message: 'Erro na requisicao'}));

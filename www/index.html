@@ -5,10 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>EMPRESAS</title>
-  
-    <!-- <link href="https://fonts.googleapis.com/css?family=Dosis:400,700" rel="stylesheet"> -->
-    <!-- <link href="style.css" rel="stylesheet"> -->
+    <title>Upper Tools - APP</title>
 
     <!-- bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -20,44 +17,86 @@
 
     <div id="app">
         <nav class="navbar navbar-light bg-light">
-        <a href="index.html" class="navbar-brand">EMPRESAS</a>
-            <form class="form-inline" id="buscarEmpresa">
+        <a href="index.html" class="navbar-brand">Upper Tools - APP</a>
+            <!-- <form class="form-inline" id="buscarEmpresa">
                 <input class="form-control mr-sm-2" id="inpt-buscarEmpresa" type="search" placeholder="Nome da empresa" aria-label="Search">
                 <button onclick="pegarEmpresa()" class="btn btn-outline-success my-2 my-sm-0" type="button" >Procurar</button>
-            </form>
+            </form> -->
         </nav>
         <br/>
         <div class="container">
-            <div class="card">
+            <div class="row">
 
-                <!-- onde eh mapeado todas as empresas -->
-                <div class="card-body" id="card-body" style="padding: 5 5;">
-                    <div class="row justify-content-md-center">
-                        <div class="col col-lg-4">
-                            <button type="button" onclick="coletarEmpresas()" class="btn btn-outline-primary btn-lg">MOSTRAR EMPRESAS</button>
-                        </div>
-                        <div class="col-md-auto">
-                          
-                        </div>
-                        <div class="col col-lg-6">
+                <div class="col-sm-4">
+                    <div class="card ">
+                        <h5 class="card-header text-success">CADASTRAR EMPRESA</h5>
+                        <div class="card-body">
+                          <h5 class="card-title"></h5>
+                          <p class="card-text">Informe um CNPJ válido, para que possamos coletar os dados junto a da Receita Federal.</p>
                             <form class="form-inline" id="cadastrarEmpresas">
-                                <label for="inpt-cadastrarEmpresas">Informe o CNPJ para cadastrar uma nova empresa</label>
-                                <input class="form-control form-control-lg" id="inpt-cadastrarEmpresas" type="search" placeholder="CNPJ sem pontuação" aria-label="Search">
-                                <button onclick="cadastrarEmpresa()" class="btn btn-outline-success btn-lg" type="button" >Cadastrar</button>
+                                <!-- <label for="inpt-cadastrarEmpresas">Informe o CNPJ para cadastrar uma nova empresa</label> -->
+                                <input class="form-control mr-sm-2" id="inpt-cadastrarEmpresas" type="search" placeholder="Digite o CNPJ" aria-label="Search">
+                                <button onclick="cadastrarEmpresa()" class="btn btn-outline-success my-2 my-sm-0" type="button">Cadastrar</button>
+                                <small id="inpt-cadastrarEmpresas-Help" class="form-text text-muted">Informe os 14 dígitos do CNPJ.</small>
                             </form>
                         </div>
-                      </div>
-                      <div class="row">
-                    
+                    </div>
+                </div>
 
+                <div class="col-sm-4">
+                    <div class="card text-center">
+                        <h5 class="card-header text-primary">MOSTRAR EMPRESAS</h5>
+                        <div class="card-body">
+                          <p class="card-text">Já são mais de 2.000 empresas cadastradas. Clique no botão abaixo, e veja as empresas já cadastradas em nossa base de dados.</p>
+                          <button type="button" onclick="mostrarEmpresas()" class="btn btn-outline-primary btn-lg">MOSTRAR EMPRESAS</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-sm-4">
+                    <div class="card text-right">
+                        <h5 class="card-header text-warning">PROCURAR EMPRESA</h5>
+                        <div class="card-body">
+                            <p class="card-text">Já tem o CNPJ em mãos? Ótimo! Informe o abaixo e pesquise se a empresa já existe em nossa base de dados. Caso não tenha, pesquise pelo Nome Empresarial.</p>
+                            <form class="form-inline" id="buscarEmpresa">
+                                <input class="form-control mr-sm-2" id="inpt-buscarEmpresa" type="search" placeholder="Digite CNPJ ou Nome" aria-label="Search" required>
+                                <button onclick="buscarEmpresa()" class="btn btn-outline-warning my-2 my-sm-0" type="button">Procurar</button>
+                                <small id="inpt-buscarEmpresas-Help" class="form-text text-muted">Informe o CNPJ ou o Nome Empresarial.</small>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        
+        <br/>
+        
+        <div class="container">
+            <div class="card">
+
+                <!-- aonde eh mapeado os JSONs -->
+                <div class="card-body" id="card-body" style="padding: 5 5;">
                     
                 </div>
-                <!-- onde eh mapeado todas as empresas -->
+                <!-- aonde eh mapeado os JSONs -->
             
             </div>
         </div>
+    </div>
 
-    </div> <!-- /div app -->
+    <br/>
+    
+    <!-- footer -->
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <div class="col-md-auto">
+                Upper Tools - 2020
+                <br/>
+            </div>
+        </div>
+    </div>
+    <!-- footer -->
 
     <!-- bootstrap -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -67,9 +106,4 @@
 
     <script src="novo.js"></script>
 </body>
-
-<footer>
-    Upper Tools - 2020
-</footer>
-
 </html>
